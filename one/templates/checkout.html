@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Checkout</h2>
+
+    <div class="text-center mt-4">
+        <p><strong>Product:</strong> {{ product_name }}</p>
+        <p><strong>Total Amount:</strong> {{ total_price }} PKR</p>
+
+        <form method="post" action="https://sandbox.jazzcash.com.pk/ApplicationAPI/API/" id="payment-form">
+            {% csrf_token %}
+
+            <!-- JazzCash required fields -->
+            <input type="hidden" name="pp_Version" value="{{ post_data.pp_Version }}">
+            <input type="hidden" name="pp_TxnType" value="{{ post_data.pp_TxnType }}">
+            <input type="hidden" name="pp_Language" value="{{ post_data.pp_Language }}">
+            <input type="hidden" name="pp_MerchantID" value="{{ post_data.pp_MerchantID }}">
+            <input type="hidden" name="pp_Password" value="{{ post_data.pp_Password }}">
+            <input type="hidden" name="pp_TxnRefNo" value="{{ post_data.pp_TxnRefNo }}">
+            <input type="hidden" name="pp_Amount" value="{{ post_data.pp_Amount }}">
+            <input type="hidden" name="pp_TxnCurrency" value="{{ post_data.pp_TxnCurrency }}">
+            <input type="hidden" name="pp_TxnDateTime" value="{{ post_data.pp_TxnDateTime }}">
+            <input type="hidden" name="pp_BillReference" value="{{ post_data.pp_BillReference }}">
+            <input type="hidden" name="pp_Description" value="{{ post_data.pp_Description }}">
+            <input type="hidden" name="pp_TxnExpiryDateTime" value="{{ post_data.pp_TxnExpiryDateTime }}">
+            <input type="hidden" name="pp_ReturnURL" value="{{ post_data.pp_ReturnURL }}">
+            <input type="hidden" name="pp_SecureHash" value="{{ post_data.pp_SecureHash }}">
+
+            <button type="submit" class="btn btn-success btn-lg mt-3">Proceed to JazzCash</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,296 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+ONE A | ONLINE ECOM
+{% endblock %}
+
+{% block content %}
+<!-- Animate.css CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <!-- Slide 1 - Fashion -->
+    <div class="carousel-item active" style="min-height: 100vh;">
+      <section class="hero-section position-relative text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1740&q=80') center/cover no-repeat; min-height: 100vh;">
+        <div class="container text-center">
+          <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInDown">FASHION COLLECTION <span class="text-warning">2024</span></h1>
+          <a href="{% url 'one:all_list' %}" class="btn btn-warning btn-lg px-5 py-3 fw-bold shadow animate__animated animate__pulse animate__infinite">SHOP NOW <i class="fas fa-arrow-right ms-2"></i></a>
+          <div class="mt-4 d-flex justify-content-center gap-4">
+            <span class="text-white-50"><i class="fas fa-star text-warning"></i> 4.9/5 (2K+ Reviews)</span>
+            <span class="text-white-50"><i class="fas fa-truck text-warning"></i> Free Shipping</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Slide 2 - Electronics -->
+    <div class="carousel-item" style="min-height: 100vh;">
+      <section class="hero-section position-relative text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1740&q=80') center/cover no-repeat; min-height: 100vh;">
+        <div class="container text-center">
+          <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInLeft">ELECTRONICS <span class="text-warning">SALE</span></h1>
+          <a href="{% url 'one:all_list' %}" class="btn btn-warning btn-lg px-5 py-3 fw-bold shadow animate__animated animate__pulse animate__infinite">SHOP NOW <i class="fas fa-arrow-right ms-2"></i></a>
+          <div class="mt-4 d-flex justify-content-center gap-4">
+            <span class="text-white-50"><i class="fas fa-star text-warning"></i> 4.9/5 (2K+ Reviews)</span>
+            <span class="text-white-50"><i class="fas fa-truck text-warning"></i> Free Shipping</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Slide 3 - Home Goods -->
+    <div class="carousel-item" style="min-height: 100vh;">
+      <section class="hero-section position-relative text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1740&q=80') center/cover no-repeat; min-height: 100vh;">
+        <div class="container text-center">
+          <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInUp">HOME <span class="text-warning">ESSENTIALS</span></h1>
+          <a href="{% url 'one:all_list' %}" class="btn btn-warning btn-lg px-5 py-3 fw-bold shadow animate__animated animate__pulse animate__infinite">SHOP NOW <i class="fas fa-arrow-right ms-2"></i></a>
+          <div class="mt-4 d-flex justify-content-center gap-4">
+            <span class="text-white-50"><i class="fas fa-star text-warning"></i> 4.9/5 (2K+ Reviews)</span>
+            <span class="text-white-50"><i class="fas fa-truck text-warning"></i> Free Shipping</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Controls & Indicators -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+</div>
+
+<!-- Carousel and Mobile Mockup Section -->
+<div class="container my-5">
+  <div class="row justify-content-center align-items-center gx-5">
+    <!-- Left Side: Vertical Carousel -->
+    <div class="col-lg-6 mb-4 mb-lg-0">
+      <div class="vertical-carousel-container neon-frame">
+        <div class="vertical-carousel" id="verticalCarousel">
+          <div class="vertical-carousel-item active">
+            <video autoplay loop muted playsinline>
+              <source src="{% static 'videos/2.mp4' %}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="vertical-carousel-item">
+            <video autoplay loop muted playsinline>
+              <source src="{% static 'videos/3.mp4' %}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <button class="carousel-control-vertical carousel-control-prev-vertical" type="button">
+          <span class="carousel-control-vertical-icon" aria-hidden="true">↑</span>
+        </button>
+        <button class="carousel-control-vertical carousel-control-next-vertical" type="button">
+          <span class="carousel-control-vertical-icon" aria-hidden="true">↓</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Side: Mobile Mockup -->
+    <div class="col-lg-4 d-flex justify-content-center">
+      <div class="mockup-phone neon-frame">
+        <div class="mockup-phone-camera"></div>
+        <div class="mockup-phone-display">
+          <video autoplay loop muted playsinline>
+            <source src="{% static 'videos/1.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Final CTA -->
+<section class="py-5 bg-dark text-white text-center animated-gradient">
+  <div class="container">
+    <h2 class="display-5 fw-bold mb-3">Don’t Miss Out!</h2>
+    <p class="lead mb-4">Use code <span class="bg-warning text-dark px-2 fw-bold">SUMMER50</span> for 50% off. Ends soon!</p>
+  </div>
+</section>
+
+<!-- Custom Styling -->
+<style>
+  .vertical-carousel-container {
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 20px;
+    padding: 0px;
+  }
+
+  .vertical-carousel {
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .vertical-carousel-item {
+    height: 590px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vertical-carousel-item video {
+    margin-top: 2px;
+    margin-bottom: 4px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+  }
+
+  .carousel-control-vertical {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #ffb74b;
+    color: #000;
+    font-weight: bold;
+    border-radius: 50%;
+    border: none;
+    z-index: 2;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .carousel-control-vertical:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .carousel-control-prev-vertical {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .carousel-control-next-vertical {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .neon-frame {
+    border: 8px solid #ffb74b;
+    box-shadow: 0 0 10px #ffb74b, 0 0 20px #ffb74b, 0 0 30px #ffa726;
+    border-radius: 20px;
+    padding: 10px;
+    transition: all 0.4s ease;
+  }
+
+  .neon-frame:hover {
+    box-shadow: 0 0 20px #ffb74b, 0 0 40px #ffa726;
+  }
+
+  .mockup-phone {
+    width: 240px;
+    height: 480px;
+    border: 8px solid #ffb74b;
+    border-radius: 40px;
+    position: relative;
+    overflow: hidden;
+    background-color: #3d3c3c;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+  .mockup-phone-camera {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 8px;
+    background: #333;
+    border-radius: 10px;
+    z-index: 2;
+  }
+
+  .mockup-phone-display {
+    width: 100%;
+    height: 100%;
+    padding: 40px 0 20px 0;
+    z-index: 1;
+    position: relative;
+  }
+
+  .mockup-phone-display video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+
+  .btn-warning:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .animated-gradient {
+    border:8px;
+    border-radius: 40px;
+    background: linear-gradient(270deg,rgb(240, 199, 51),  #3d3c3c);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+
+<!-- JavaScript for Vertical Carousel -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('verticalCarousel');
+    const items = document.querySelectorAll('.vertical-carousel-item');
+    const prevBtn = document.querySelector('.carousel-control-prev-vertical');
+    const nextBtn = document.querySelector('.carousel-control-next-vertical');
+
+    let currentIndex = 0;
+    const itemHeight = items[0].offsetHeight;
+    const totalItems = items.length;
+
+    function updateCarousel() {
+      carousel.style.transform = `translateY(-${currentIndex * itemHeight}px)`;
+      items.forEach((item, index) => {
+        item.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalItems;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+      updateCarousel();
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    setInterval(nextSlide, 7000); // auto-rotate every 7 seconds
+
+    updateCarousel();
+  });
+</script>
+{% endblock %}

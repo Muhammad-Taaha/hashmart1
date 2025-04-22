@@ -1,0 +1,264 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card border-0 shadow-lg hover-lift">
+            <div class="card-header bg-gradient-primary text-white text-center py-4">
+                <h2 class="fw-bold mb-1">Create Account</h2>
+                <p class="mb-0">Join our community</p>
+            </div>
+            
+            <div class="card-body p-4 p-xl-5">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Username Field -->
+                    <div class="form-group mb-4">
+                        <label for="id_username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-0">
+                                <i class="bi bi-person-fill text-primary"></i>
+                            </span>
+                            <input type="text" 
+                                   name="username" 
+                                   id="id_username" 
+                                   class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                                   value="{{ form.username.value|default:'' }}"
+                                   placeholder="Enter username">
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group mb-4">
+                        <label for="id_email" class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-0">
+                                <i class="bi bi-envelope-fill text-primary"></i>
+                            </span>
+                            <input type="email" 
+                                   name="email" 
+                                   id="id_email" 
+                                   class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                                   value="{{ form.email.value|default:'' }}"
+                                   placeholder="example@email.com">
+                        </div>
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group mb-4">
+                        <label for="id_password1" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-0">
+                                <i class="bi bi-lock-fill text-primary"></i>
+                            </span>
+                            <input type="password" 
+                                   name="password1" 
+                                   id="id_password1" 
+                                   class="form-control {% if form.password1.errors %}is-invalid{% endif %}" 
+                                   placeholder="Create password">
+                        </div>
+                        {% if form.password1.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.password1.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="form-group mb-4">
+                        <label for="id_password2" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-0">
+                                <i class="bi bi-shield-lock-fill text-primary"></i>
+                            </span>
+                            <input type="password" 
+                                   name="password2" 
+                                   id="id_password2" 
+                                   class="form-control {% if form.password2.errors %}is-invalid{% endif %}" 
+                                   placeholder="Confirm password">
+                        </div>
+                        {% if form.password2.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.password2.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 btn-lg gradient-btn">
+                        <i class="bi bi-person-plus-fill me-2"></i>Create Account
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="text-center mt-4">
+                        <p class="mb-0 small text-muted">
+                            Already have an account? 
+                            <a href="{% url 'login' %}" class="text-decoration-none text-primary hover-underline">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>Login here
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: all 0.3s ease;
+        border-radius: 1rem;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,0.15)!important;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, rgb(255, 219, 89),rgb(33, 33, 33));
+        border-radius: 1rem 1rem 0 0;
+    }
+    
+    .gradient-btn {
+        background: linear-gradient(135deg, rgb(255, 219, 89),rgb(33, 33, 33));
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .gradient-btn:hover {
+        background: linear-gradient(135deg,rgb(220, 220, 220), #6366f1);
+        transform: translateY(-2px);
+    }
+    
+    .form-control {
+        border-radius: 0.5rem;
+        border-left: 0;
+        background:rgb(73, 74, 75);
+    }
+    
+    .form-control:focus {
+        box-shadow: none;
+        border-color:rgb(99, 99, 99);
+        background: #fff;
+    }
+    
+    .input-group-text {
+        border-radius: 0.5rem 0 0 0.5rem!important;
+        border-right: 0;
+    }
+    
+    .hover-underline {
+        position: relative;
+    }
+    
+    .hover-underline::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: currentColor;
+        transition: width 0.3s ease;
+    }
+    
+    .hover-underline:hover::after {
+        width: 100%;
+    }
+    
+    .is-invalid {
+        border-color: #dc3545!important;
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+
+{% comment %} {% extends "layout.html" %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <h2 class="text-center">Register</h2>
+            
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group mb-3">
+                    <label for="id_username">Username</label>
+                    <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value }}">
+                    {% if form.username.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.username.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_email">Email</label>
+                    <input type="email" name="email" id="id_email" class="form-control" value="{{ form.email.value }}">
+                    {% if form.email.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.email.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_password1">Password</label>
+                    <input type="password" name="password1" id="id_password1" class="form-control" value="{{ form.password1.value }}">
+                    {% if form.password1.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password1.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_password2">Confirm Password</label>
+                    <input type="password" name="password2" id="id_password2" class="form-control" value="{{ form.password2.value }}">
+                    {% if form.password2.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password2.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-20">Register</button>
+            </form>
+
+            <p class="mt-3 text-center">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+{% endblock %} {% endcomment %}

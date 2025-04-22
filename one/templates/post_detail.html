@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ product.text }} Details
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 justify-content-center">
+    <div class="row g-5">
+        <!-- Product Image -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg ratio ratio-1x1 hover-lift" style=" height:600px;">
+                <img 
+                    src="{% if product.photo %}{{ product.photo.url }}{% else %}/static/images/default-image.jpg{% endif %}" 
+                    class="card-img-top object-fit-cover p-3" 
+                    alt="Product Image"
+                    loading="lazy"
+                    style="height:380px; width: 100%;"
+                >
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h1 class="display-5 fw-bold mb-4">{{ product.text }}</h1>
+                    
+                    <div class="d-flex gap-4 mb-5">
+                        <div class="badge bg-primary bg-gradient fs-5 p-3">
+                            <i class="bi bi-box-seam me-2"></i>{{ product.quantity }} Available
+                        </div>
+                        <div class="badge bg-warning bg-gradient text-dark fs-5 p-3">
+                            {% if product.rating %}
+                                ★ {{ product.rating|floatformat:1 }}/5
+                            {% else %}
+                                No Ratings
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <!-- Rating Form -->
+                    <form method="post" action="{% url 'rate_post' product.id %}" class="mt-auto">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="mb-3">Rate this product</h5>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-0">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </span>
+                                    <input 
+                                        type="number" 
+                                        name="rating" 
+                                        step="0.1" 
+                                        min="1" 
+                                        max="5" 
+                                        value="{{ product.rating }}" 
+                                        required
+                                        class="form-control form-control-lg border-0 bg-light"
+                                        placeholder="Enter rating (1-5)"
+                                    >
+                                    <button type="submit" class="btn btn-warning btn-lg px-4">
+                                        Update Rating
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 1rem;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,0.15)!important;
+    }
+    
+    .object-fit-cover {
+        object-fit: cover;
+        object-position: center center;
+    }
+    
+    .badge.bg-primary {
+        background: linear-gradient(45deg, #0d6efd, #0b5ec2);
+    }
+    
+    .badge.bg-warning {
+        background: linear-gradient(45deg, #ffc107, #ff9100);
+    }
+    
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #ffc107;
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+
+
+<!-- post_detail.html -->
+{% comment %} {% extends "layout.html" %}
+
+{% block title %}
+    {{ product.text }} Details
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">{{ product.text }}</h1>
+
+    <div class="product-details">
+        <img src="{% if product.photo %}{{ product.photo.url }}{% else %}/static/images/default-image.jpg{% endif %}" alt="Product Image">
+        <p>{{ product.text }}</p>
+
+        <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+        <p><strong>Rating:</strong> 
+            {% if product.rating %}
+                {{ product.rating }} / 5
+            {% else %}
+                No rating yet.
+            {% endif %}
+        </p>
+
+        {% if user.is_authenticated %}
+            <!-- Rating Form -->
+            <form method="post" action="{% url 'rate_post' product.id %}">
+                {% csrf_token %}
+                <label for="rating">Rate this product:</label>
+                <input type="number" name="rating" step="0.1" min="1" max="5" value="{{ product.rating }}" required>
+                <button type="submit" class="btn btn-warning">Submit Rating</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %} {% endcomment %}

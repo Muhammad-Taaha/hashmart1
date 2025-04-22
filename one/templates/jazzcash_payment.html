@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JazzCash Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card shadow p-4" style="max-width: 600px; margin: 0 auto;">
+        <h3 class="mb-4 text-center">JazzCash Payment Testing</h3>
+        {% comment %} https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform/ {% endcomment %}
+        {% comment %} <form method="POST" action="{% url 'one:jazzcash_payment'%}">
+         
+            
+            <!-- Hidden fields for Merchant Info -->
+            <input type="hidden" name="pp_MerchantID" value="MC150925">
+            <input type="hidden" name="pp_Password" value="u39a1z3823">
+
+            <div class="mb-3">
+                <label for="pp_TxnRefNo" class="form-label">Transaction Ref No</label>
+                <input type="text" class="form-control" name="pp_TxnRefNo"  required>
+            </div>
+
+            <div class="mb-3">
+                <label for="pp_Amount" class="form-label">Amount</label>
+                <input type="text" class="form-control" name="pp_Amount" value="1000" required>
+            </div>
+
+            <input type="hidden" name="pp_TxnCurrency" value="PKR">
+
+            <div class="mb-3">
+                <label for="pp_BillReference" class="form-label">Bill Reference</label>
+                <input type="text" class="form-control" name="pp_BillReference" value="billRef" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="pp_Description" class="form-label">Description</label>
+                <input type="text" class="form-control" name="pp_Description" value="Description of transaction" required>
+            </div>
+
+            <input type="hidden" name="pp_ReturnURL" value="http://127.0.0.1:8000/one/all/">
+            <input type="hidden" name="pp_SecureHash" value="{{hashValuesString}}">
+
+            <button type="submit" class="btn btn-success w-100">Submit Payment</button>
+            <div>{{salt}}</div>
+
+        </form>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>  {% endcomment %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JazzCash Payment</title>
+</head>
+<body>
+    <h3>JazzCash Payment</h3>
+    <form name="jsform" method="post" action="https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform/">
+        {% csrf_token %}
+        <input type="hidden" name="pp_Version" value="{{ data.pp_Version }}">
+        <input type="hidden" name="pp_TxnType" value="{{ data.pp_TxnType }}">
+        <input type="hidden" name="pp_Language" value="{{ data.pp_Language }}">
+        <input type="hidden" name="pp_MerchantID" value="{{ data.pp_MerchantID }}">
+        <input type="hidden" name="pp_TxnRefNo" value="{{ data.pp_TxnRefNo }}">
+        <input type="hidden" name="pp_Amount" value="{{ data.pp_Amount }}">
+        <input type="hidden" name="pp_TxnCurrency" value="{{ data.pp_TxnCurrency }}">
+        <input type="hidden" name="pp_TxnDateTime" value="{{ data.pp_TxnDateTime }}">
+        <input type="hidden" name="pp_BillReference" value="{{ data.pp_BillReference }}">
+        <input type="hidden" name="pp_Description" value="{{ data.pp_Description }}">
+        <input type="hidden" name="pp_TxnExpiryDateTime" value="{{ data.pp_TxnExpiryDateTime }}">
+        <input type="hidden" name="pp_ReturnURL" value="{{ data.pp_ReturnURL }}">
+        <input type="hidden" name="pp_SecureHash" value="{{ data.pp_SecureHash }}">
+
+        <button type="submit">Proceed with Payment</button>
+    </form>
+</body>
+</html>
+
+
+{% endblock %}

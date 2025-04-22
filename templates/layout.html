@@ -1,0 +1,592 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ONE{% endblock %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body data-bs-theme="dark">
+    
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <!-- Brand with logo/icon -->
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'one:all_list' %}">
+                <i class="bi bi-shop-window text-warning me-2"></i>
+                <span class="fw-bold"><span class="text-warning">#HASH</span>MART</span>
+            </a>
+
+            
+           
+            <!-- Mobile toggle button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Navbar content -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- Main navigation -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="{% url 'one:all_list' %}">
+                            <i class="bi bi-house-door me-1"></i> Home
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+                                New
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="#about">
+                        <i class="bi bi-info-circle me-1"></i> About
+                    </a>
+                
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'one:chat' %}">
+                            <i class="bi bi-robot me-1"></i> AI Assistant
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'one:dashboard_view' %}">
+                         Dashboard
+                        </a>
+                    </li>
+                    
+                    <!-- User dropdown -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark border-0 shadow">
+                            <li><a class="dropdown-item" href="{% url 'one:all_list' %}">
+                                <i class="bi bi-house me-2"></i> Home
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'one:user_posts' user.username %}">
+                                <i class="bi bi-collection me-2"></i> Your Posts
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">
+                                <i class="bi bi-gear me-2"></i> Settings
+                            </a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                <!-- Search bar -->
+                <form class="d-flex me-3" role="search" method="GET" action="{% url 'one:search_view' %}">
+                    <div class="input-group">
+                        <input type="text" name="username" class="form-control bg-dark text-light border-secondary" 
+                               placeholder="Search users..." aria-label="Search">
+                        <button class="btn btn-outline-warning" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Auth buttons -->
+                <div class="d-flex align-items-center">
+                    {% if user.is_authenticated %}
+                    <!-- Cart with badge -->
+                    <a href="{% url 'one:view_cart' user.username %}" class="btn btn-outline-warning position-relative me-2">
+                        <i class="bi bi-cart3"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3 <span class="visually-hidden">items in cart</span>
+                        </span>
+                    </a>
+                    
+                    <!-- User avatar dropdown -->
+                    <div class="dropdown">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% static 'pictures/1.png' %}" alt="User" width="32" height="32" class="rounded-circle border border-warning">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end border-0 shadow">
+                            <li><span class="dropdown-item fw-bold">Welcome, {{ user.username }}</span></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{% url 'logout' %}" class="px-2">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger w-100">
+                                        <i class="bi bi-box-arrow-right me-1"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-warning">
+                        <i class="bi bi-person-plus me-1"></i> Sign Up
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <style>
+      /* Sliding About Panel */
+      .about-panel {
+          position: fixed;
+          top: 0;
+          right: -400px;
+          width: 400px;
+          height: 100%;
+          background: #1a1a1a;
+          box-shadow: -2px 0 12px rgba(0,0,0,0.2);
+          transition: all 0.3s ease-in-out;
+          z-index: 1000;
+          padding: 2rem;
+          overflow-y: auto;
+      }
+      
+      .about-panel.open {
+          transform: translateX(-400px);
+      }
+  
+      .about-close-btn {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          color: #D4AF37;
+          cursor: pointer;
+          transition: all 0.2s ease;
+      }
+  
+      .about-close-btn:hover {
+          opacity: 0.8;
+      }
+  
+      .about-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.5);
+          z-index: 999;
+          display: none;
+      }
+  </style>
+  
+  <!-- Add these elements at the end of your body -->
+  <div class="about-overlay" id="aboutOverlay" role="dialog" aria-hidden="true" tabindex="-1"></div>
+<div class="about-panel" id="aboutPanel" role="dialog" aria-labelledby="aboutTitle" aria-modal="true">
+    <button class="about-close-btn" id="aboutClose" aria-label="Close about panel">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+    </button>
+    
+    <div class="about-content">
+        <header class="about-header mb-4">
+            <h1 id="aboutTitle" class="text-warning mb-3">
+                <i class="bi bi-stars me-2"></i>
+                About <span class="text-uppercase">#HASHMART</span>
+            </h1>
+            <p class="lead text-light opacity-75">
+                Revolutionizing e-commerce through AI-powered innovation
+            </p>
+        </header>
+
+        <section class="about-body">
+            <div class="mb-4">
+                <h2 class="h5 text-warning mb-3">
+                    <i class="bi bi-lightning-charge me-2"></i>
+                    Core Features
+                </h2>
+                <ul class="list-unstyled text-light">
+                    <li class="d-flex align-items-center mb-3">
+                        <i class="bi bi-robot me-3 text-warning"></i>
+                        <div>
+                            <strong>AI Shopping Assistant</strong>
+                            <p class="small mb-0 opacity-75">24/7 intelligent purchase guidance</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center mb-3">
+                        <i class="bi bi-graph-up me-3 text-warning"></i>
+                        <div>
+                            <strong>Real-time Tracking</strong>
+                            <p class="small mb-0 opacity-75">Live inventory & price monitoring</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center mb-3">
+                        <i class="bi bi-shield-lock me-3 text-warning"></i>
+                        <div>
+                            <strong>Secure Transactions</strong>
+                            <p class="small mb-0 opacity-75">Military-grade encryption</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center mb-3">
+                        <i class="bi bi-shield-lock me-3 text-warning"></i>
+                        <div>
+                            <strong>Dashboard</strong>
+                            <p class="small mb-0 opacity-75">For better trending product insight</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="border-top border-secondary pt-4">
+                <h2 class="h5 text-warning mb-3">
+                    <i class="bi bi-award me-2"></i>
+                    Our Promise
+                </h2>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="bg-dark p-3 rounded text-center h-100">
+                            <i class="bi bi-truck text-warning h3 mb-2"></i>
+                            <p class="mb-0 small">
+                                <strong>Fast Delivery</strong><br>
+                                <span class="opacity-75">Within 24-48 hours</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-dark p-3 rounded text-center h-100">
+                            <i class="bi bi-arrow-repeat text-warning h3 mb-2"></i>
+                            <p class="mb-0 small">
+                                <strong>Easy Returns</strong><br>
+                                <span class="opacity-75">30-day guarantee</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-top border-secondary pt-4 mt-4">
+            <div class="text-center small opacity-75">
+                <p class="mb-1">Version 2.4.1 • Updated 2025</p>
+                <div class="text-warning">
+                    <i class="bi bi-patch-check-fill me-2"></i>
+                    PCI DSS Certified
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+  
+  <script>
+      // Sliding About Panel Logic
+      const aboutPanel = document.getElementById('aboutPanel');
+      const aboutOverlay = document.getElementById('aboutOverlay');
+      const aboutClose = document.getElementById('aboutClose');
+  
+      function toggleAboutPanel() {
+          aboutPanel.classList.toggle('open');
+          aboutOverlay.style.display = aboutPanel.classList.contains('open') ? 'block' : 'none';
+      }
+  
+      // Event Listeners
+      document.querySelector('a[href="#about"]').addEventListener('click', function(e) {
+          e.preventDefault();
+          toggleAboutPanel();
+      });
+  
+      aboutClose.addEventListener('click', toggleAboutPanel);
+      aboutOverlay.addEventListener('click', toggleAboutPanel);
+  
+      // Close with ESC key
+      document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && aboutPanel.classList.contains('open')) {
+              toggleAboutPanel();
+          }
+      });
+  </script>
+    <style>
+        .navbar {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            background-color: dark !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-link {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link:focus {
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+        
+        .dropdown-menu {
+            min-width: 220px;
+            padding: 0.5rem;
+        }
+        
+        .dropdown-item {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(212, 175, 55, 0.2);
+        }
+        
+        .form-control:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+        }
+    </style>
+{% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <span class="text-warning">#HASH</span>MART
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'one:all_list' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'one:chat' %}">Chat Bot</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{% url 'one:all_list' %}">Home</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'one:user_posts' user.username %}">Your Posts</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                <div>
+                    <form class="d-flex" role="search" method="GET" action="{% url 'one:search_view' %}">
+                        <input type="text" name="username" class="form-control me-2" placeholder="Enter username...">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+                
+                
+            </ul>
+
+            <div class="d-flex">
+                {% if user.is_authenticated %}
+                <!-- Cart Button -->
+                <a href="{% url 'one:view_cart' user.username %}" class="btn btn-outline-warning position-relative me-3">
+                    <i class="bi bi-cart3"></i>
+                    Cart
+                </a>
+
+                <!-- Logout Button -->
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger ms-1">Logout</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-success ms-3">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav> {% endcomment %}
+
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer class="bg-dark text-white pt-5 pb-4">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Brand Column -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="footer-brand">
+          <h5 class="fw-bold mb-3 text-gradient">HASHMART</h5>
+          <p class="small text-muted">Your one-stop shop for everything from electronics to essentials.</p>
+          <div class="social-icons mt-3">
+            <a href="#" class="text-white me-2 transition-all" aria-label="Facebook">
+              <i class="bi bi-facebook fs-5 hover-scale"></i>
+            </a>
+            <a href="#" class="text-white me-2 transition-all" aria-label="Twitter">
+              <i class="bi bi-twitter fs-5 hover-scale"></i>
+            </a>
+            <a href="#" class="text-white me-2 transition-all" aria-label="Instagram">
+              <i class="bi bi-instagram fs-5 hover-scale"></i>
+            </a>
+            <a href="#" class="text-white transition-all" aria-label="LinkedIn">
+              <i class="bi bi-linkedin fs-5 hover-scale"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links Columns -->
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="text-uppercase fw-semibold mb-3 position-relative pb-2 footer-title">Categories</h6>
+        <ul class="list-unstyled small footer-links">
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Electronics</a></li>
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Home & Kitchen</a></li>
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Books</a></li>
+          <li><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Toys & Games</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="text-uppercase fw-semibold mb-3 position-relative pb-2 footer-title">Support</h6>
+        <ul class="list-unstyled small footer-links">
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Help Center</a></li>
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Order Status</a></li>
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Shipping Info</a></li>
+          <li><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Returns</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="text-uppercase fw-semibold mb-3 position-relative pb-2 footer-title">Company</h6>
+        <ul class="list-unstyled small footer-links">
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">About Us</a></li>
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Careers</a></li>
+          <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Press</a></li>
+          <li><a href="#" class="text-white-50 text-decoration-none hover-link d-inline-block transition-all">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Column -->
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h6 class="text-uppercase fw-semibold mb-3 position-relative pb-2 footer-title">Stay Updated</h6>
+        <p class="small text-muted mb-3">Get news, deals, and special offers straight to your inbox.</p>
+        <form class="mb-4">
+          <div class="input-group">
+            <input type="email" class="form-control rounded-start bg-gray-800 border-gray-700 text-white" placeholder="Your email" aria-label="Email">
+            <button class="btn btn-primary rounded-end px-3" type="submit">
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </div>
+          <div class="form-text small text-muted mt-1">We'll never share your email.</div>
+        </form>
+        <div class="payment-methods">
+          <p class="small text-muted mb-2">We accept</p>
+          <div class="d-flex flex-wrap gap-2">
+            <img src="https://img.icons8.com/color/36/000000/visa.png" alt="Visa" class="hover-lift transition-all" loading="lazy">
+            <img src="https://img.icons8.com/color/36/000000/mastercard.png" alt="Mastercard" class="hover-lift transition-all" loading="lazy">
+            <img src="https://img.icons8.com/color/36/000000/paypal.png" alt="PayPal" class="hover-lift transition-all" loading="lazy">
+            <img src="https://img.icons8.com/color/36/000000/google-pay.png" alt="Google Pay" class="hover-lift transition-all" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="text-center border-top border-gray-800 pt-4 mt-3">
+      <p class="mb-0 small text-muted">&copy; HASHMART. All rights reserved.
+        <a href="#" class="text-white-50 text-decoration-none hover-underline ms-2 me-2 transition-all">Privacy Policy</a>
+        <span class="text-gray-600">•</span>
+        <a href="#" class="text-white-50 text-decoration-none hover-underline ms-2 me-2 transition-all">Terms</a>
+        <span class="text-gray-600">•</span>
+        <a href="#" class="text-white-50 text-decoration-none hover-underline ms-2 transition-all">Sitemap</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+ 
+  .text-gradient {
+    background: linear-gradient(90deg,rgb(250, 194, 8) 0%,rgb(240, 239, 236) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  
+  .footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg,rgb(250, 194, 8) 0%,rgb(240, 239, 236) 100%);
+  }
+  
+  .hover-link:hover {
+    color: white !important;
+    transform: translateX(3px);
+  }
+  
+  .hover-underline:hover {
+    text-decoration: underline !important;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-3px);
+  }
+  
+  .transition-all {
+    transition: all 0.3s ease;
+  }
+  
+  .bg-gray-800 {
+    background-color: #1e293b;
+  }
+  
+  .border-gray-700 {
+    border-color: #334155;
+  }
+  
+  .border-gray-800 {
+    border-color: #1e293b;
+  }
+  
+  .text-muted {
+    color: #94a3b8 !important;
+  }
+  
+  .btn-primary {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+  }
+</style>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+        crossorigin="anonymous"></script>
+
+</body>
+</html> 

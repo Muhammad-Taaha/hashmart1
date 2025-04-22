@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block title %}About Hashmart{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero bg-gradient-primary text-white py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold mb-4">Redefining E-Commerce</h1>
+                <p class="lead mb-4">Hashmart: Where Innovation Meets Shopping Excellence</p>
+                <a href="#our-story" class="btn btn-light btn-lg rounded-pill px-4">Explore Our Journey</a>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f" 
+                     class="img-fluid rounded-3 shadow-lg" 
+                     alt="Hashmart Team"
+                     loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 display-4 fw-bold text-primary">Why Hashmart?</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-rocket-takeoff fs-1 text-primary mb-3"></i>
+                        <h5 class="fw-bold">Lightning Fast Delivery</h5>
+                        <p>90% of orders delivered within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat similar cards for other features -->
+        </div>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="display-5 fw-bold mb-4">Our Story</h2>
+                <p class="lead">Founded in 2020, Hashmart began as a small startup with a big vision - to transform the online shopping experience. Today, we serve millions of customers worldwide with our curated selection of quality products.</p>
+                <div class="mt-4">
+                    <div class="d-flex mb-3">
+                        <div class="flex-shrink-0 text-primary fs-3">→</div>
+                        <div class="ms-3">
+                            <h5>2020 - Humble Beginnings</h5>
+                            <p>Launched with 50 products and 3 team members</p>
+                        </div>
+                    </div>
+                    <!-- Add more timeline items -->
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c" 
+                     class="img-fluid rounded-3 shadow" 
+                     alt="Hashmart Office"
+                     loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Core Values -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <h2 class="text-center mb-5 display-4 fw-bold">Our Core Values</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <h3 class="fw-bold">Customer First</h3>
+                        <p>24/7 support and customer-centric policies</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for other values -->
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-warning">
+    <div class="container text-center py-5">
+        <h2 class="display-5 fw-bold mb-4">Join the Hashmart Family</h2>
+        <p class="fs-5 mb-4">Over 2 million satisfied customers and counting</p>
+        <a href="{% url 'one:register' %}" class="btn btn-dark btn-lg rounded-pill px-5">Start Shopping Now</a>
+    </div>
+</section>
+
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+    }
+    
+    .hover-lift {
+        transition: all 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,0.15)!important;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+    }
+</style>
+{% endblock %}

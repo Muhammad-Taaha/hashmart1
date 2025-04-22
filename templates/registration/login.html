@@ -1,0 +1,164 @@
+{% extends "layout.html" %}
+{% load socialaccount %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-6 col-lg-5 col-xl-4">
+        <div class="card border-0 shadow-lg hover-lift">
+            <div class="card-header bg-gradient-primary text-white text-center py-4">
+                <h2 class="fw-bold mb-0">Welcome Back</h2>
+                <p class="mb-0">Sign in to continue</p>
+            </div>
+            
+            <div class="card-body p-4 p-xl-5">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Username Input -->
+                    <div class="form-group mb-4">
+                        <label for="id_username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0">
+                                <i class="bi bi-person-fill text-primary"></i>
+                            </span>
+                            {{ form.username }}
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="mt-2">
+                                {% for error in form.username.errors %}
+                                    <div class="text-danger small">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group mb-4">
+                        <label for="id_password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0">
+                                <i class="bi bi-lock-fill text-primary"></i>
+                            </span>
+                            {{ form.password }}
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="mt-2">
+                                {% for error in form.password.errors %}
+                                    <div class="text-danger small">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 btn-lg gradient-btn">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </button>
+                    <!-- Google Sign-in Button -->
+                    <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light w-100 border shadow-sm mt-4" style="background: #ffffff; color: #444;">
+                        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" style="height: 20px; margin-right: 10px;">
+                        Continue with Google
+                    </a>
+                                        <!-- Additional Links -->
+                    <div class="d-flex justify-content-between mt-4">
+                        {% comment %} <a href="#" class="text-decoration-none small text-muted">Forgot Password?</a> {% endcomment %}
+                        <a href="{% url 'one:register' %}" class="text-decoration-none small text-primary">
+                            Create Account
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: all 0.3s ease;
+        border-radius: 1rem;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,0.15)!important;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg,rgb(255, 219, 89),rgb(33, 33, 33));
+        border-radius: 1rem 1rem 0 0;
+    }
+    
+    .gradient-btn {
+        background: linear-gradient(135deg,rgb(255, 219, 89),rgb(33, 33, 33));
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .gradient-btn:hover {
+        background: linear-gradient(135deg,rgb(239, 247, 234), #6366f1);
+        transform: translateY(-2px);
+    }
+    
+    .form-control {
+        border-radius: 0.5rem;
+        border-left: 0;
+        background: #f8f9fa;
+    }
+    
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
+        background: #fff;
+    }
+    
+    .input-group-text {
+        border-radius: 0.5rem 0 0 0.5rem!important;
+        border-right: 0;
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "layout.html" %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <h2 class="text-center">Login </h2>
+            
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group mb-3">
+                    <label for="id_username">Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.username.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="id_password">Password</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-20">Login</button>
+            </form>
+
+            <p class="mt-3 text-center">Don't have an account? <a href="{% url 'one:register' %}">Register here</a></p>
+        </div>
+    </div>
+{% endblock %} {% endcomment %}
